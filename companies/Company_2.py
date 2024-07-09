@@ -1,11 +1,12 @@
 import sqlite3
+from datetime import datetime
 from TC_ABC import TransportCompany
 
 
 class Company2(TransportCompany):
 
     def __init__(self):
-        self.db_file = 'orders_company_2.db'
+        self.db_file = 'orders_company2.db'
         self._create_table_if_not_exists()
 
     def _create_table_if_not_exists(self):
@@ -20,8 +21,8 @@ class Company2(TransportCompany):
 
     def calculate_delivery(self, from_location, to_location, weight, volume, max_dimension):
         delivery_options = [
-            {"service": "Стандартная Доставка", "cost": 800, "days": 7},
-            {"service": "Премиум Доставка", "cost": 2500, "days": 1}
+            {"service": "Regular Delivery", "cost": 800, "days": 7},
+            {"service": "Premium Delivery", "cost": 2500, "days": 1}
         ]
         return delivery_options
 
@@ -29,12 +30,13 @@ class Company2(TransportCompany):
         try:
             conn = sqlite3.connect(self.db_file)
             cur = conn.cursor()
-            cur.execute('''INSERT INTO orders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                        tuple(order_details.values()))
+            cur.execute('''INSERT INTO orders (from_location, to_location, weight, volume, max_dimension,
+                                               recipient_name, contact_phone, order_date, service, cost, days)
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', tuple(order_details.values()))
             conn.commit()
             conn.close()
         except sqlite3.DatabaseError as e:
-            print(f"Ошибка при работе с базой данных: {e}")
+            print(f"Ошибка при работе с базой данных: {repr(e)}")
 
     def get_orders(self, date_filter=None):
         try:
@@ -47,11 +49,10 @@ class Company2(TransportCompany):
             rows = cur.fetchall()
             conn.close()
 
-            # Преобразование кортежей в словари
             columns = ["from_location", "to_location", "weight", "volume", "max_dimension", "recipient_name",
                        "contact_phone", "order_date", "service", "cost", "days"]
             orders = [dict(zip(columns, row)) for row in rows]
             return orders
         except sqlite3.DatabaseError as e:
-            print(f"Ошибка при работе с базой данных: {e}")
+            print(f"Ошибка при работе с базой данных: {repr(e)}")
             return []

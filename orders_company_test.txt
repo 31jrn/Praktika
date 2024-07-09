@@ -1,0 +1,1 @@
+{'from_location': 'Нижний Новгород', 'to_location': 'Ростов-на-Дону', 'weight': 6.8, 'volume': 1.7, 'max_dimension': 2.5, 'recipient_name': 'Мулазин Петр Николаевич', 'contact_phone': '+79019247358', 'order_date': '09-07-2024', 'service': 'Эконом Доставка', 'cost': 700, 'days': 14}

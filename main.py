@@ -1,16 +1,10 @@
 import json
 from datetime import datetime
-from Company_1 import Company1
-from Company_2 import Company2
-from Company_3 import Company3
+from companies import load_companies
 
 
 def main():
-    companies = {
-        "1": Company1(),
-        "2": Company2(),
-        "3": Company3()
-    }
+    companies = load_companies()
 
     while True:
         print("\nВыберите действие:")
@@ -21,7 +15,7 @@ def main():
         choice = input("Введите номер действия: ")
 
         if choice == "1":
-            company_choice = input("Выберите компанию (1, 2, 3): ")
+            company_choice = input(f"Выберите компанию ({', '.join(companies.keys())}): ")
             if company_choice not in companies:
                 print("Неверный выбор компании.")
                 continue
@@ -65,7 +59,7 @@ def main():
             print("Заказ зарегистрирован.")
 
         elif choice == "2":
-            company_choice = input("Выберите компанию (1, 2, 3): ")
+            company_choice = input(f"Выберите компанию ({', '.join(companies.keys())}): ")
             if company_choice not in companies:
                 print("Неверный выбор компании.")
                 continue
@@ -109,7 +103,7 @@ def main():
             print("Заказ зарегистрирован.")
 
         elif choice == "3":
-            company_choice = input("Выберите компанию (1, 2, 3): ")
+            company_choice = input(f"Выберите компанию ({', '.join(companies.keys())}): ")
             if company_choice not in companies:
                 print("Неверный выбор компании.")
                 continue
@@ -122,7 +116,7 @@ def main():
                 try:
                     orders.sort(key=lambda x: datetime.strptime(x['order_date'], "%d-%m-%Y"))
                 except ValueError as e:
-                    print(f"Ошибка при сортировке заказов: {e}")
+                    print(f"Ошибка при сортировке заказов: {repr(e)}")
                     continue
             print("\nСписок заказов:")
             for order in orders:

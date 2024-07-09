@@ -1,2 +1,8 @@
-pandas            2.2.2
-openpyxl          3.2.0b1
+pandas              2.2.2
+openpyxl            3.2.0b1
+et-xmlfile	        1.1.0
+numpy	            2.0.0
+openpyxl	        3.2.0b1
+pip	24.1.2	        24.1.2
+scipy	            1.14.0
+setuptools	        70.2.0
